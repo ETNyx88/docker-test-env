@@ -1,4 +1,4 @@
-image: php:5.6
+image: etnyx88/docker-test-env
 
 stages:
   - deploy
