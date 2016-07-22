@@ -8,4 +8,4 @@ github_mirror:
   script:
     - apt-get update -yqq
     - apt-get install git -yqq
-    - git push --mirror https://$GITHUB_USER:$GITHUB_PASS@github.com/etnyx-efun/docker-test-env.git
+    - git push --mirror https://$GITHUB_USER:$GITHUB_PASS@github.com/ETNyx88/docker-test-env.git
