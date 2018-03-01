@@ -8,6 +8,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
   php-xml \
   php-zip \
   php-gd \
+  php-mbstring \
   curl \
   mariadb-client \
   openssh-client \
