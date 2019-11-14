@@ -13,8 +13,8 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
  apt-get update -y && \
  apt-get install -y google-chrome-stable && \
  ln -s $(which yarnpkg) /usr/bin/yarn && \
- printf "<VirtualHost *:80>\nDocumentRoot /build/finvest.cz-master/www/doc_root\n<Directory /build/finvest.cz-master/w$
+ printf "<VirtualHost *:80>\nDocumentRoot /build/finvest.cz-master/www/doc_root\n<Directory /build/finvest.cz-master/www>\nAllowOverride All\nRequire all granted\n</Directory>\n</VirtualHost>" > /etc/apache2/sites-enabled/000-default.conf && \
  service mysql restart && \
  touch db.sql && \
- printf "CREATE DATABASE \`finvest\`;\nCREATE USER finvest@localhost IDENTIFIED VIA mysql_native_password USING '*23AE$
+ printf "CREATE DATABASE \`finvest\`;\nCREATE USER finvest@localhost IDENTIFIED VIA mysql_native_password USING '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257';\nGRANT ALL PRIVILEGES ON * . * TO 'finvest'@'localhost';\nFLUSH PRIVILEGES;\n" > db.sql && \
  mysql < db.sql
