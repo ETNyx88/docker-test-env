@@ -9,12 +9,14 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
  gem install sass compass && \
  curl -sS -L https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
  ls -la /etc/apt/sources.list.d/ && \
- echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list && \
+ echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
  apt-get update -y && \
  apt-get install -y google-chrome-stable && \
  ln -s $(which yarnpkg) /usr/bin/yarn && \
- printf "<VirtualHost *:80>\nDocumentRoot /build/finvest.cz-master/www/doc_root\n<Directory /build/finvest.cz-master/www>\nAllowOverride All\nRequire all granted\n</Directory>\n</VirtualHost>" > /etc/apache2/sites-enabled/000-default.conf && \
+ printf "<VirtualHost *:80>\nServerName project.lc\nServerAlias www.project.lc en.project.lc ru.project.lc de.project.lc es.project.lc prc.project.lc\nDocumentRoot /builds/project.lc/www/doc_root\nRewriteEngine On\nphp_admin_value open_basedir /builds/project.lc/www:/tmp\nLimitInternalRecursion 20\n<Directory /builds/project.lc/www>\nAllowOverride All\nRequire all granted\n</Directory>\n</VirtualHost>" > /etc/apache2/sites-enabled/project.lc.conf && \
+ a2enmod rewrite && \
  service mysql restart && \
+ service apache2 restart && \
  touch db.sql && \
- printf "CREATE DATABASE \`finvest\`;\nCREATE USER finvest@localhost IDENTIFIED VIA mysql_native_password USING '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257';\nGRANT ALL PRIVILEGES ON * . * TO 'finvest'@'localhost';\nFLUSH PRIVILEGES;\n" > db.sql && \
+ printf "CREATE DATABASE \`project\`;\nCREATE USER project@localhost IDENTIFIED VIA mysql_native_password USING '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257';\nGRANT ALL PRIVILEGES ON * . * TO 'project'@'localhost';\nFLUSH PRIVILEGES;\n" > db.sql && \
  mysql < db.sql
