@@ -13,8 +13,9 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
  apt-get update -y && \
  apt-get install -y google-chrome-stable && \
  ln -s $(which yarnpkg) /usr/bin/yarn && \
- printf "<VirtualHost *:80>\nServerName project.lc\nServerAlias www.project.lc en.project.lc ru.project.lc de.project.lc es.project.lc prc.project.lc\nDocumentRoot /builds/project.lc/www/doc_root\nRewriteEngine On\nphp_admin_value open_basedir /builds/project.lc/www:/tmp\nLimitInternalRecursion 20\n<Directory /builds/project.lc/www>\nAllowOverride All\nRequire all granted\n</Directory>\n</VirtualHost>" > /etc/apache2/sites-enabled/project.lc.conf && \
+ printf "<VirtualHost *:80>\nServerName project.lc\nServerAlias www.project.lc en.project.lc ru.project.lc de.project.lc es.project.lc prc.project.lc\nDocumentRoot /builds/project.lc/www/doc_root\nRewriteEngine On\nphp_admin_value open_basedir /builds/project.lc/www:/tmp\nLimitInternalRecursion 20\n<Directory /builds/project.lc/www>\nAllowOverride All\nRequire all granted\n</Directory>\n</VirtualHost>\n<VirtualHost *:443>\nServerName project.lc\nServerAlias www.project.lc en.project.lc ru.project.lc de.project.lc es.project.lc prc.project.lc\nDocumentRoot /builds/project.lc/www/doc_root\nRewriteEngine On\nphp_admin_value open_basedir /builds/project.lc/www:/tmp\nLimitInternalRecursion 20\n<Directory /builds/project.lc/www>\nAllowOverride All\nRequire all granted\n</Directory>\nSSLEngine on\nSSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem\nSSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key\n</VirtualHost>" > /etc/apache2/sites-enabled/project.lc.conf && \
  a2enmod rewrite && \
+ a2enmod ssl && \
  service mysql restart && \
  service apache2 restart && \
  touch db.sql && \
