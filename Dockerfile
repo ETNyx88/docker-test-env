@@ -1,5 +1,10 @@
 FROM debian:stable
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
+RUN apt-get update -y && apt-get upgrade -y && \
+ DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
+ sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+ dpkg-reconfigure --frontend=noninteractive locales && \
+ update-locale LANG=en_US.UTF-8
+ apt-get install -y \
   git curl gnupg imagemagick \
   apache2 libapache2-mod-php \
   php-cli php-curl php-mysql php-xml php-zip php-gd php-mbstring php-bz2 \
@@ -21,3 +26,5 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
  touch db.sql && \
  printf "CREATE DATABASE \`project\`;\nCREATE USER project@localhost IDENTIFIED VIA mysql_native_password USING '*23AE809DDACAF96AF0FD78ED04B6A265E05AA257';\nGRANT ALL PRIVILEGES ON * . * TO 'project'@'localhost';\nFLUSH PRIVILEGES;\n" > db.sql && \
  mysql < db.sql
+
+ENV LANG en_US.UTF-8
