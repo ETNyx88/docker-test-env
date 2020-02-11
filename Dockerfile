@@ -3,7 +3,7 @@ RUN apt-get update -y && apt-get upgrade -y && \
  DEBIAN_FRONTEND=noninteractive apt-get install -y locales && \
  sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
  dpkg-reconfigure --frontend=noninteractive locales && \
- update-locale LANG=en_US.UTF-8
+ update-locale LANG=en_US.UTF-8 && \
  apt-get install -y \
   git curl gnupg imagemagick \
   apache2 libapache2-mod-php \
